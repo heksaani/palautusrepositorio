@@ -3,10 +3,11 @@ from player_reader import PlayerReader
 
 
 class StatisticsService:
-    def __init__(self):
-        reader = PlayerReader()
-
+    def __init__(self, reader):
         self._players = reader.get_players()
+        # nyt StaticsService-luokka ei enää lue pelaajia itse, vaan se saa
+        # pelaajat PlayerReader-olion avulla
+        # eli StatisticsService-luokka saa konstruktorin parametrina PlayerReader-olion
 
     def search(self, name):
         for player in self._players:
