@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 class PlayerReaderStub:
@@ -30,19 +30,35 @@ class TestStatisticsService(unittest.TestCase):
         player = self.stats.search("Selanne")
         self.assertEqual(player, None)
 
-    def test_team(self):
+    def test_team_count(self):
         # testataan, että ohjelma osaa määritellä oikein joukkueen pelaajat
-        # eli testataaan tema()-metodin toimintaa
+        # eli testataaan team()-metodin toimintaa
         team = self.stats.team("EDM") # joukkueen nimi on "EDM" ja sillä on kolme pelaajaa
         self.assertEqual(len(team), 3) # testataan, että joukkueen pelaajia on kolme
 
+    def test_team_correct_players(self):
+        # testataan, että joukkueen pelaajat ovat oikeat
+        team = self.stats.team("PIT")
+        self.assertEqual(team[0].name, "Lemieux")
     
     def test_top(self):
         # testataan top()-metodin toimintaa
-        # eli testataan, että top()-metodi palauttaa oikean määrän pelaajia
+        # eli testataan, että palauttaa oikean määrän pelaajia
         top_players = self.stats.top(3)
-        self.assertEqual(len(top_players), 4)
-
-
-
+        self.assertEqual(len(top_players), 3)
     
+    def test_top_goals(self):
+        top_players = self.stats.top(3, SortBy.GOALS)
+        self.assertEqual(len(top_players), 3)
+        self.assertEqual(top_players[0].name, "Lemieux")
+
+    def test_top_assists(self):
+        top_players = self.stats.top(3, SortBy.ASSISTS)
+        self.assertEqual(len(top_players), 3)
+        self.assertEqual(top_players[0].name, "Gretzky")
+
+    def test_top_points(self):
+        top_players = self.stats.top(3, SortBy.POINTS)
+        self.assertEqual(len(top_players), 3)
+        self.assertEqual(top_players[0].name, "Gretzky")
+
