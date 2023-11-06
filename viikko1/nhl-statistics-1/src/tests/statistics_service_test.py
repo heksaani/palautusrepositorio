@@ -61,4 +61,5 @@ class TestStatisticsService(unittest.TestCase):
         top_players = self.stats.top(3, SortBy.POINTS)
         self.assertEqual(len(top_players), 3)
         self.assertEqual(top_players[0].name, "Gretzky")
+    
 
