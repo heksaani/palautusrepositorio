@@ -24,5 +24,10 @@ class ProjectReader:
         description = content_dict["tool"]["poetry"]["description"]
         dependencies = content_dict["tool"]["poetry"]["dependencies"]
         dev_dependencies = content_dict["tool"]["poetry"]["group"]['dev']['dependencies']
+
+        # laajennetaan ratkaisua sisältämään myös auhors, lincece ja muut 
+        license = content_dict["tool"]["poetry"]["license"]
+        authors = list(content_dict["tool"]["poetry"]["authors"])
         # deserialisoi TOML-formaatissa oleva merkkijono ja muodosta Project-olio sen tietojen perusteella
-        return Project(name, description, dependencies, dev_dependencies)
+        #self, name, licence, authors:list ,description, dependencies, dev_dependencies
+        return Project(name, license, authors, description, dependencies, dev_dependencies)
