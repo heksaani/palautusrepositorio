@@ -16,9 +16,12 @@ def main():
         if player.nationality == "FIN":
             players.append(player)
 
+    # pelaajien järjestäminen pisteiden mukaan
+    sorted_players = sorted(players, key=lambda player: player.points, reverse=True)
+
     print("Players from FIN:")
 
-    for player in players:
+    for player in sorted_players:
         print(player)
 
 if __name__ == "__main__":
