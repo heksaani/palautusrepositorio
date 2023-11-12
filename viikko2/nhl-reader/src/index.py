@@ -1,27 +1,13 @@
-from player import Player
-import requests
+from player_reader import PlayerReader
+from player_stats import PlayerStats
 
 def main():
     url = "https://studies.cs.helsinki.fi/nhlstats/2022-23/players"
-    response = requests.get(url).json()  # tämä tekee http pyynnön ja metodi json kutsu muuttaa tiedoston python rakenteeksi
-    # responseen on  tallennettu lista dictionaryjä
+    reader = PlayerReader(url)
+    stats = PlayerStats(reader)
+    players = stats.top_scorers_by_nationality("FIN")
 
-    #print("JSON-muotoinen vastaus:")
-    #print(response)
-
-    players = []
-
-    for player_dict in response:
-        player = Player(player_dict)
-        if player.nationality == "FIN":
-            players.append(player)
-
-    # pelaajien järjestäminen pisteiden mukaan
-    sorted_players = sorted(players, key=lambda player: player.points, reverse=True)
-
-    print("Players from FIN:")
-
-    for player in sorted_players:
+    for player in players:
         print(player)
 
 if __name__ == "__main__":
