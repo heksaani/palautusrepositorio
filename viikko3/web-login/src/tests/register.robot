@@ -11,20 +11,41 @@ Register With Valid Username And Password
     Set Username  heksaani
     Set Password  salasana123
     Set Password Confirmation  salasana123
-#Register With Too Short Username And Valid Password
-# ...
+    Submit Registration
+    Register Should Succeed
 
-#Register With Valid Username And Invalid Password
-# salasana ei sisällä halutunlaisia merkkejä
-# ...
+Register With Too Short Username And Valid Password
+    Set Username  he
+    Set Password  salasana123
+    Set Password Confirmation  salasana123
+    Submit Registration
+    Register Should Fail With Message  Username must be at least 3 characters long
 
-#Register With Nonmatching Password And Password Confirmation
-# ...
+Register With Valid Username And Invalid Password
+    Set Username  heksaani
+    Set Password  salasana
+    Set Password Confirmation  salasana
+    Submit Registration
+    Register Should Fail With Message  Password must contain numbers
 
+Register With Nonmatching Password And Password Confirmation
+    Set Username  heksaani
+    Set Password  salasana123
+    Set Password Confirmation  salasana
+    Submit Registration
+    Register Should Fail With Message  Passwords do not match
+    
 *** Keywords ***
+Submit Registration
+    Click Button  Register
 
 Register Should Succeed
-    Welcome Page Should Be Open
+   Title Should Be  Welcome to Ohtu Application!
+
+Register Should Fail With Message
+    [Arguments]    ${message}
+    Register Page Should Be Open
+    Page Should Contain    ${message}
 
 Set Password
     [Arguments]  ${password}
