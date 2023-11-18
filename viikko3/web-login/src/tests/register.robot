@@ -1,6 +1,7 @@
 *** Settings ***
 Library  SeleniumLibrary
 Resource  resource.robot
+Resource  login_resource.robot
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
 Test Setup  Go To Register Page
@@ -34,7 +35,29 @@ Register With Nonmatching Password And Password Confirmation
     Set Password Confirmation  salasana
     Submit Registration
     Register Should Fail With Message  Passwords do not match
+
+Login After Successful Registration
+    Set Username  heksaani
+    Set Password  salasana123
+    Set Password Confirmation  salasana123
+    Submit Registration
+    Go To Login Page
+    Set Username  heksaani
+    Set Password  salasana123
+    Submit Login
+    Login Should Succeed
     
+Login After Failed Registration
+    Set Username  heksaani
+    Set Password  salasana1234
+    Set Password Confirmation  salasana
+    Submit Registration
+    Go To Login Page
+    Set Username  heksaani
+    Set Password  salasana1234
+    Submit Login
+    Login Should Fail With Message  Invalid username or password
+
 *** Keywords ***
 Submit Registration
     Click Button  Register
