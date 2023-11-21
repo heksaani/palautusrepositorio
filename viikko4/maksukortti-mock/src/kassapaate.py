@@ -7,11 +7,11 @@ class Kassapaate:
 
     def lataa(self, kortti, summa):
         """Lataa kortille summan"""
-        kortti.lataa(summa)
+        if summa > 0:
+            kortti.lataa(summa)
 
     def osta_lounas(self, kortti):
         """Osta lounas kortilla jos rahaa on tarpeeksi"""
         if kortti.saldo >= HINTA:
             kortti.osta(HINTA)
             self.myytyja_lounaita = self.myytyja_lounaita + 1
-
