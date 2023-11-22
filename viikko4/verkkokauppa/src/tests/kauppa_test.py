@@ -20,7 +20,7 @@ class TestKauppa(unittest.TestCase):
                 return 5 # leipää on varastossa 5 kappaletta
             elif tuote_id == 3:
                 return 0
-        
+
         def varasto_hae_tuote(tuote_id):
             if tuote_id == 1:
                 return Tuote(1, "maito", 5) # tuotteen id, nimi ja hinta
@@ -28,7 +28,7 @@ class TestKauppa(unittest.TestCase):
                 return Tuote(2, "leipä", 10)
             elif tuote_id == 3:
                 return Tuote(3, "juusto", 15)
-            
+
         self.varasto_mock.saldo.side_effect = varasto_saldo
         self.varasto_mock.hae_tuote.side_effect = varasto_hae_tuote
         self.kauppa = Kauppa(self.varasto_mock, self.pankki_mock, self.viitegeneraattori_mock)
@@ -74,3 +74,13 @@ class TestKauppa(unittest.TestCase):
         kauppa.lisaa_koriin(3)
         kauppa.tilimaksu("pekka", "12345")
         self.pankki_mock.tilisiirto.assert_called_with("pekka", 42, "12345", "33333-44455", 5)
+    
+    
+    def test_poista_tuote(self):
+        kauppa = self.kauppa
+        kauppa.aloita_asiointi()
+        kauppa.lisaa_koriin(1)
+        kauppa.poista_korista(1)
+        kauppa.lisaa_koriin(2)
+        kauppa.tilimaksu("pekka", "12345")
+        self.pankki_mock.tilisiirto.assert_called_with("pekka", 42, "12345", "33333-44455", 10)
