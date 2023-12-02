@@ -15,3 +15,4 @@ viikko4/verkkokauppa/.coverage
 **/poetry.lock
 **/__pycache__/
 viikko4/maksukortti-mock/src/tests/__pycache__/kassapaate_test.cpython-311-pytest-7.4.3.pyc
+viikko3/*
