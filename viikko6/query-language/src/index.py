@@ -16,13 +16,21 @@ def main():
         Not(HasAtLeast(2, "goals")),
         PlaysIn("NYR")
     )
-
+    #e3
+    matcher = Or(
+        HasAtLeast(45, "goals"),
+        HasAtLeast(70, "assists")
+    )
+    matcher = And(
+        HasAtLeast(70, "points"),
+        Or(
+            PlaysIn("NYR"),
+            PlaysIn("FLA"),
+            PlaysIn("BOS")
+        )
+    )
     for player in stats.matches(matcher):
         print(player)
-
-    filtered_with_all = stats.matches(All())
-    print(len(filtered_with_all))
-
 
 if __name__ == "__main__":
     main()
