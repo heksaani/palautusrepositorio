@@ -1,10 +1,16 @@
 from tuomari import Tuomari
+# koska Pääohjelmalla ei saa olla riippuvuuksia konkreettisiin pelin toteuttaviin luokkiin
+# on ne toeutettava rajapinnan kautta ( eli luokkan Peli avulla) 
 class KiviPaperiSakset:
     """Kivi-paperi-sakset peliin liittyvä luokka
     joka pitää kirjaa pelin kierroksista ja tuloksista"""
     def pelaa(self):
         """Metodi pelaa kierroksen peliä
         ja tulostaa lopuksi pelin tuloksen"""
+        #pelaa-metodi tulee toteuttaa template-metodina
+        # template metodi kutsuu abstrakteja metodeja _ensimmaisen_siirto ja _toisen_siirto 
+        # ja tarkastaa niiden palauttamat siirrot
+        # sekä kutsuu metodia kirjaa_siirto tuomarin olion avulla
         tuomari = Tuomari()
 
         ekan_siirto = self._ensimmaisen_siirto()
